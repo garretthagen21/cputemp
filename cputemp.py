@@ -62,7 +62,6 @@ class TempCharacteristic(Characteristic):
                 self, self.TEMP_CHARACTERISTIC_UUID,
                 ["notify", "read"], service)
         self.add_descriptor(TempDescriptor(self))
-        self.StartNotify()
 
     def get_temperature(self):
         value = []
@@ -77,13 +76,16 @@ class TempCharacteristic(Characteristic):
         strtemp = str(round(temp, 1)) + " " + unit
         for c in strtemp:
             value.append(dbus.Byte(c.encode()))
+
         print("Temperature is "+str(temp)+unit)
+
         return value
 
     def set_temperature_callback(self):
         if self.notifying:
             value = self.get_temperature()
             self.PropertiesChanged(GATT_CHRC_IFACE, {"Value": value}, [])
+            print("Temperature Callback Set")
 
         return self.notifying
 
@@ -142,12 +144,16 @@ class UnitCharacteristic(Characteristic):
         elif val == "F":
             self.service.set_farenheit(True)
 
+        print("WriteValue() for Unit Characteristic: "+val)
+
     def ReadValue(self, options):
         value = []
 
         if self.service.is_farenheit(): val = "F"
         else: val = "C"
         value.append(dbus.Byte(val.encode()))
+
+        print("ReadValue() for Unit Characteristic "+val)
 
         return value
 

@@ -76,7 +76,7 @@ class TempCharacteristic(Characteristic):
         strtemp = str(round(temp, 1)) + " " + unit
         for c in strtemp:
             value.append(dbus.Byte(c.encode()))
-
+        print("Temperature is "+str(temp)+unit)
         return value
 
     def set_temperature_callback(self):
@@ -89,7 +89,7 @@ class TempCharacteristic(Characteristic):
     def StartNotify(self):
         if self.notifying:
             return
-
+        print("StartNotify() for Temperature Characteristic "+TempCharacteristic.TEMP_CHARACTERISTIC_UUID)
         self.notifying = True
 
         value = self.get_temperature()
@@ -97,9 +97,11 @@ class TempCharacteristic(Characteristic):
         self.add_timeout(NOTIFY_TIMEOUT, self.set_temperature_callback)
 
     def StopNotify(self):
+        print("StopNotify() for Temperature Characteristic "+TempCharacteristic.TEMP_CHARACTERISTIC_UUID)
         self.notifying = False
 
     def ReadValue(self, options):
+        print("ReadValue() for Temperature Characteristic "+TempCharacteristic.TEMP_CHARACTERISTIC_UUID)
         value = self.get_temperature()
 
         return value
@@ -176,5 +178,6 @@ adv.register()
 
 try:
     app.run()
+
 except KeyboardInterrupt:
     app.quit()

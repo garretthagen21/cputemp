@@ -53,7 +53,7 @@ app = Application()
 app.add_service(MeasurementService())
 app.register()
 
-adv = G8Advertisement(0)
+adv = G8Advertisement()
 adv.register()
 
 try:

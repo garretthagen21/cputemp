@@ -21,8 +21,14 @@ PROPRIO_DESCRIPTOR_UUID = "2902"
 LIMIT_DESCRIPTOR_UUID = "2903"
 
 
-def read_value_callback():
+def read_inc_callback():
     return 1.5
+
+def read_prop_callback():
+    return 2.5
+
+def read_limit_callback():
+    return "NONE"
 
 
 class MeasurementService(Service):
@@ -34,8 +40,9 @@ class MeasurementService(Service):
 
         Service.__init__(self, index, MEASUREMENT_SVC_UUID, True)
 
-        # Add to inclination characteristic
+        # Add characteristics
         self.add_characteristic(InclincationCharacteristic(self))
+        self.add_characteristic(ProprioCharacteristic(self))
 
     def is_in_motion(self):
         return self.state != "IDLE" and self.state != "CALIBRATION"
@@ -52,14 +59,23 @@ class MeasurementService(Service):
 
 class InclincationCharacteristic(Characteristic):
     def __init__(self, service):
-        self.notifying = False
 
         Characteristic.__init__(
             self, service=service, uuid=INC_CHARACTERISTIC_UUID, flags=["notify", "read"],
             description="Inclination Angle Characteristic", notify_timeout=DEFAULT_NOTIFY_TIMEOUT,
-            read_value_callback=lambda: read_value_callback())
+            read_value_callback=lambda: read_inc_callback())
 
         self.add_descriptor(Descriptor(characteristic=self, uuid=INC_DESCRIPTOR_UUID,
-                                        flags=["read"], description="Inclination Angle"))
+                                       flags=["read"], description="Inclination Angle"))
 
 
+class ProprioCharacteristic(Characteristic):
+    def __init__(self, service):
+
+        Characteristic.__init__(
+            self, service=service, uuid=PROPRIO_CHARACTERISTIC_UUID, flags=["notify", "read"],
+            description="Proprio Angle Characteristic", notify_timeout=DEFAULT_NOTIFY_TIMEOUT,
+            read_value_callback=lambda: read_prop_callback())
+
+        self.add_descriptor(Descriptor(characteristic=self, uuid=PROPRIO_DESCRIPTOR_UUID,
+                                       flags=["read"], description="Proprio Angle"))

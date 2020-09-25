@@ -63,6 +63,7 @@ class Advertisement(dbus.service.Object):
     def add_service_uuid(self, uuid):
         if not self.service_uuids:
             self.service_uuids = []
+
         self.service_uuids.append(uuid)
 
     def add_solicit_uuid(self, uuid):
@@ -94,7 +95,7 @@ class Advertisement(dbus.service.Object):
     def GetAll(self, interface):
         if interface != LE_ADVERTISEMENT_IFACE:
             raise InvalidArgsException()
-
+        print(self.get_properties()[LE_ADVERTISEMENT_IFACE])
         return self.get_properties()[LE_ADVERTISEMENT_IFACE]
 
     @dbus.service.method(LE_ADVERTISEMENT_IFACE,

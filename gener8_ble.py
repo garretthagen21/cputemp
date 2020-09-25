@@ -34,7 +34,7 @@ SOFTWARE.
 
 from gatt.advertisement import Advertisement
 from gatt.application import Application
-from ble_profile.measurement import MeasurementService
+from ble_profile.measurement import MeasurementService, MEASUREMENT_SVC_UUID
 
 
 class G8Advertisement(Advertisement):
@@ -42,7 +42,7 @@ class G8Advertisement(Advertisement):
         Advertisement.__init__(self, index, "peripheral")
         self.add_local_name("Gener-8")
         self.add_manufacturer_data(0xFFFF, "Gener-8 Inc.")
-        self.add_service_uuid(MeasurementService.uuid)
+        self.add_service_uuid(MEASUREMENT_SVC_UUID)
         self.include_tx_power = True
 
 

@@ -232,6 +232,8 @@ class Characteristic(dbus.service.Object):
         value = []
 
         str_value = str(self.read_value_callback())
+        print("Value read: "+str_value)
+        str_value="test"
 
         for c in str_value:
             value.append(dbus.Byte(c.encode()))

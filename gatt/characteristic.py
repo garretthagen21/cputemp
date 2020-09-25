@@ -112,12 +112,15 @@ class Characteristic(dbus.service.Object):
     def WriteValue(self, value, options):
         print("WriteValue() " + self.description + ": " + self.uuid)
 
-        print("str(value) = "+str(value)+" --- str(val[0]) = "+str(value[0]))
+        value_str = ''.join([chr(byte) for byte in value])
 
-        self.current_bytes = value_to_byte_array(str(value[0]))
+
+        # Set our current value
+        self.current_bytes = value_to_byte_array(value_str)
+
+        print("str(value) = "+str(value)+" --- value_str = "+value_str)
 
         # Update observers
-        value_str = self.get_value()
         for write_callback in self.on_write_callbacks:
             write_callback(value_str)
 

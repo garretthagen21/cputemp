@@ -14,7 +14,6 @@ from gatt.common import GObject
 from gatt.bletools import BleTools
 
 
-DBUS_OM_IFACE = "org.freedesktop.DBus.ObjectManager"
 
 
 class Application(dbus.service.Object):

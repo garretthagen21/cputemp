@@ -21,8 +21,6 @@ SOFTWARE.
 
 
 from gatt.common import *
-from advertisement import BLUEZ_SERVICE_NAME, LE_ADVERTISING_MANAGER_IFACE
-from service import DBUS_OM_IFACE
 
 
 class BleTools(object):

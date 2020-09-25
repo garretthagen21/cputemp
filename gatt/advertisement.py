@@ -104,10 +104,10 @@ class Advertisement(dbus.service.Object):
         print ('%s: Released!' % self.path)
 
     def register_ad_callback(self):
-        print("GATT advertisement registered")
+        print("GATT Advertisement Registered")
 
     def register_ad_error_callback(self):
-        print("Failed to register GATT advertisement")
+        print("Failed to Register GATT Advertisement")
 
     def register(self):
         bus = BleTools.get_bus()

@@ -48,7 +48,7 @@ class Application(dbus.service.Object):
         return response
 
     def register_app_callback(self):
-        print("GATT application registered")
+        print("GATT Application Registered")
 
     def register_app_error_callback(self, error):
         print("Failed to register application: " + str(error))
@@ -68,5 +68,5 @@ class Application(dbus.service.Object):
         self.mainloop.run()
 
     def quit(self):
-        print("\nGATT application terminated")
+        print("\nGATT Application Terminated")
         self.mainloop.quit()

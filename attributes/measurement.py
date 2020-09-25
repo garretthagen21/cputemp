@@ -16,9 +16,7 @@ MEASUREMENT_SVC_UUID = "00000001-710e-4a5b-8d75-3e5b444bc3cf"
 INC_CHARACTERISTIC_UUID = "00000002-710e-4a5b-8d75-3e5b444bc3cf"
 PROPRIO_CHARACTERISTIC_UUID = "00000003-710e-4a5b-8d75-3e5b444bc3cf"
 LIMIT_CHARACTERISTIC_UUID = "00000004-710e-4a5b-8d75-3e5b444bc3cf"
-INC_DESCRIPTOR_UUID = "2901"
-PROPRIO_DESCRIPTOR_UUID = "2902"
-LIMIT_DESCRIPTOR_UUID = "2903"
+DESCRIPTOR_UUID="2901"
 
 
 def read_inc_callback():
@@ -65,7 +63,7 @@ class InclincationCharacteristic(Characteristic):
             description="Inclination Angle Characteristic", notify_timeout=DEFAULT_NOTIFY_TIMEOUT,
             read_value_callback=lambda: read_inc_callback())
 
-        self.add_descriptor(Descriptor(characteristic=self, uuid=INC_DESCRIPTOR_UUID,
+        self.add_descriptor(Descriptor(characteristic=self, uuid=DESCRIPTOR_UUID,
                                        flags=["read"], description="Inclination Angle"))
 
 
@@ -77,5 +75,5 @@ class ProprioCharacteristic(Characteristic):
             description="Proprio Angle Characteristic", notify_timeout=DEFAULT_NOTIFY_TIMEOUT,
             read_value_callback=lambda: read_prop_callback())
 
-        self.add_descriptor(Descriptor(characteristic=self, uuid=PROPRIO_DESCRIPTOR_UUID,
+        self.add_descriptor(Descriptor(characteristic=self, uuid=DESCRIPTOR_UUID,
                                        flags=["read"], description="Proprio Angle"))

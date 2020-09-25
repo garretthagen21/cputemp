@@ -64,7 +64,7 @@ class InclincationCharacteristic(Characteristic):
             read_value_callback=lambda: read_inc_callback())
 
         self.add_descriptor(Descriptor(characteristic=self, uuid=DESCRIPTOR_UUID,
-                                       flags=["read","notify"], description="Inclination Angle"))
+                                       flags=["read"], description="Inclination Angle"))
 
 
 class ProprioCharacteristic(Characteristic):

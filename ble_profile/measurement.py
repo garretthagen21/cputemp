@@ -47,12 +47,12 @@ class InclincationCharacteristic(Characteristic):
     def __init__(self, service):
 
         Characteristic.__init__(
-            self, service=service, uuid=INC_CHARACTERISTIC_UUID, flags=["notify", "read"],
+            self, service=service, uuid=INC_CHARACTERISTIC_UUID, flags=["notify", "read","write"],
             description="Inclination Angle Characteristic", notify_timeout=Characteristic.DEFAULT_NOTIFY_TIMEOUT,
             on_write_callbacks=[lambda value: write_inc_callback(value)])
 
         self.add_descriptor(Descriptor(characteristic=self, uuid=DESCRIPTOR_UUID,
-                                       flags=["read","write"], description="Inclination Angle"))
+                                       flags=["read"], description="Inclination Angle"))
         self.set_value(0,False)
 
 

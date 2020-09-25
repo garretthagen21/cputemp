@@ -36,7 +36,7 @@ class MeasurementService(Service):
 
         # Add inclination characteristic and descriptor
         self.inclination_characteristic = Characteristic(self, INC_CHARACTERISTIC_UUID, ["notify", "read"],
-                                                         "Inclination Angle Characteristic",
+                                                         "Inclination Angle Characteristic",DEFAULT_NOTIFY_TIMEOUT,
                                                          lambda: read_value_callback)
         self.inclination_characteristic.add_descriptor(
             Descriptor(self.inclination_characteristic, INC_DESCRIPTOR_UUID, "Inclination Angle",

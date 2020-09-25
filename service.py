@@ -36,7 +36,11 @@ DBUS_PROP_IFACE = "org.freedesktop.DBus.Properties"
 GATT_SERVICE_IFACE = "org.bluez.GattService1"
 GATT_CHRC_IFACE = "org.bluez.GattCharacteristic1"
 GATT_DESC_IFACE = "org.bluez.GattDescriptor1"
-DEFAULT_NOTIFY_TIMEOUT = 10
+DEFAULT_NOTIFY_TIMEOUT = 1000
+
+
+def add_timeout(self, timeout, callback):
+    GObject.timeout_add(timeout, callback)
 
 
 class InvalidArgsException(dbus.exceptions.DBusException):
@@ -172,7 +176,9 @@ class Characteristic(dbus.service.Object):
     def __init__(self, service, uuid, flags, description="Unnamed Characteristic",
                  notify_timeout=DEFAULT_NOTIFY_TIMEOUT, read_value_callback=lambda: "",
                  write_value_callback=lambda value: ""):
+
         index = service.get_next_index()
+        self.notifying = False
         self.path = service.path + '/char' + str(index)
         self.bus = service.get_bus()
         self.uuid = uuid
@@ -180,7 +186,6 @@ class Characteristic(dbus.service.Object):
         self.flags = flags
         self.descriptors = []
         self.next_index = 0
-        self.notifying = False
         self.description = description
         self.read_value_callback = read_value_callback
         self.write_value_callback = write_value_callback
@@ -213,9 +218,6 @@ class Characteristic(dbus.service.Object):
 
         return idx
 
-    def add_timeout(self, timeout, callback):
-        GObject.timeout_add(timeout, callback)
-
     def add_descriptor(self, descriptor):
         self.descriptors.append(descriptor)
 
@@ -244,12 +246,11 @@ class Characteristic(dbus.service.Object):
 
     def set_notification_callback(self):
 
-        print("NotifCallback NotifyingStatus: "+str(self.notifying))
+        print("NotifCallback NotifyingStatus: " + str(self.notifying))
         if self.notifying:
             value = self.read_value_bytes()
             self.PropertiesChanged(GATT_CHRC_IFACE, {"Value": value}, [])
             print("Notification Callback Set for " + self.description + ": " + self.uuid)
-
 
         return self.notifying
 
@@ -268,17 +269,17 @@ class Characteristic(dbus.service.Object):
 
     @dbus.service.method(GATT_CHRC_IFACE)
     def StartNotify(self):
-        print("StartNotify NotifyingStatus: "+str(self.notifying))
+        print("StartNotify NotifyingStatus: " + str(self.notifying))
 
         if self.notifying:
-                return
+            return
 
         print("StartNotify() for Characteristic " + self.uuid)
         self.notifying = True
 
         value = self.read_value_bytes()
         self.PropertiesChanged(GATT_CHRC_IFACE, {"Value": value}, [])
-        self.add_timeout(self.notify_timeout, self.set_notifcation_callback)
+        add_timeout(self.notify_timeout, self.set_notifcation_callback)
 
     @dbus.service.method(GATT_CHRC_IFACE)
     def StopNotify(self):
@@ -348,6 +349,3 @@ class Descriptor(dbus.service.Object):
         if not self.writable:
             raise NotPermittedException()
         self.value = value
-
-
-

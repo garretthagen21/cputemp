@@ -21,7 +21,7 @@ DESCRIPTOR_UUID="2901"
 
 
 def write_inc_callback(value):
-    print("Write value: "+value)
+    print("Write value callback: "+value)
 
 def read_prop_callback():
     return 2.5

@@ -9,7 +9,7 @@
 # @date    2020-09-24 
 #
 
-#!/usr/bin/python3
+# !/usr/bin/python3
 
 """Copyright (c) 2019, Douglas Otwell
 
@@ -32,18 +32,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
-from gatt import Advertisement
-from gatt import Application
+from gatt.advertisement import Advertisement
+from gatt.application import Application
 from ble_profile.measurement import MeasurementService
-
 
 
 class G8Advertisement(Advertisement):
     def __init__(self, index=0):
         Advertisement.__init__(self, index, "peripheral")
         self.add_local_name("Gener-8")
-        self.add_manufacturer_data(0xFFFF,"Gener-8 Inc.")
+        self.add_manufacturer_data(0xFFFF, "Gener-8 Inc.")
         self.include_tx_power = True
 
 

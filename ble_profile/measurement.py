@@ -9,7 +9,9 @@
 # @date    2020-09-24 
 #
 
-from gatt import *
+from gatt.service import Service
+from gatt.characteristic import Characteristic
+from gatt.descriptor import Descriptor
 
 MEASUREMENT_SVC_UUID = "00000001-710e-4a5b-8d75-3e5b444bc3cf"
 INC_CHARACTERISTIC_UUID = "00000002-710e-4a5b-8d75-3e5b444bc3cf"

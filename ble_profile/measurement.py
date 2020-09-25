@@ -52,7 +52,7 @@ class InclincationCharacteristic(Characteristic):
             on_write_callbacks=[lambda value: write_inc_callback(value)])
 
         self.add_descriptor(Descriptor(characteristic=self, uuid=DESCRIPTOR_UUID,
-                                       flags=["read"], description="Inclination Angle"))
+                                       flags=["read","write"], description="Inclination Angle"))
         self.set_value(0,False)
 
 
@@ -67,6 +67,8 @@ class ProprioCharacteristic(Characteristic):
         self.add_descriptor(Descriptor(characteristic=self, uuid=DESCRIPTOR_UUID,
                                        flags=["read"], description="Proprio Angle"))
 
+        self.set_value(0,False)
+
 
 class LimitStateCharacteristic(Characteristic):
     def __init__(self, service):
@@ -78,3 +80,5 @@ class LimitStateCharacteristic(Characteristic):
 
         self.add_descriptor(Descriptor(characteristic=self, uuid=DESCRIPTOR_UUID,
                                        flags=["read"], description="Limit State"))
+
+        self.set_value("NONE",False)

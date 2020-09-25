@@ -42,6 +42,7 @@ class G8Advertisement(Advertisement):
         Advertisement.__init__(self, index, "peripheral")
         self.add_local_name("Gener-8")
         self.add_manufacturer_data(0xFFFF, "Gener-8 Inc.")
+        self.add_service_uuid(MeasurementService.uuid)
         self.include_tx_power = True
 
 

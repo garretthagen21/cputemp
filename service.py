@@ -243,10 +243,13 @@ class Characteristic(dbus.service.Object):
         self.write_value_callback(str_val)
 
     def set_notification_callback(self):
+
+        print("NotifyingStatus: "+str(self.notifying))
         if self.notifying:
             value = self.read_value_bytes()
             self.PropertiesChanged(GATT_CHRC_IFACE, {"Value": value}, [])
             print("Notification Callback Set for " + self.description + ": " + self.uuid)
+
 
         return self.notifying
 

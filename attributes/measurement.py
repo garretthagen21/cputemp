@@ -34,15 +34,8 @@ class MeasurementService(Service):
 
         Service.__init__(self, index, MEASUREMENT_SVC_UUID, True)
 
-        # Add inclination characteristic and descriptor
-        self.inclination_characteristic = Characteristic(self, INC_CHARACTERISTIC_UUID, ["notify", "read"],
-                                                         "Inclination Angle Characteristic",DEFAULT_NOTIFY_TIMEOUT,
-                                                         lambda: read_value_callback())
-        self.inclination_characteristic.add_descriptor(
-            Descriptor(self.inclination_characteristic, INC_DESCRIPTOR_UUID,
-                       ["read"],"Inclination Angle"))
-        self.add_characteristic(self.inclination_characteristic)
-
+        # Add to inclination characteristic
+        self.add_characteristic(InclincationCharacteristic(self))
 
     def is_in_motion(self):
         return self.state != "IDLE" and self.state != "CALIBRATION"
@@ -55,5 +48,18 @@ class MeasurementService(Service):
 
     def set_state(self, state):
         self.state = state
+
+
+class InclincationCharacteristic(Characteristic):
+    def __init__(self, service):
+        self.notifying = False
+
+        Characteristic.__init__(
+            self, service=service, uuid=INC_CHARACTERISTIC_UUID, flags=["notify", "read"],
+            description="Inclination Angle Characteristic", notify_timeout=DEFAULT_NOTIFY_TIMEOUT,
+            read_value_callback=lambda: read_value_callback())
+
+        self.add_descriptor(Descriptor(characteristic=self, uuid=INC_DESCRIPTOR_UUID,
+                                        flags=["read"], description="Inclination Angle"))
 
 

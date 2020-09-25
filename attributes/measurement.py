@@ -27,7 +27,7 @@ def read_value_callback():
 
 class MeasurementService(Service):
 
-    def __init__(self, index):
+    def __init__(self, index=0):
         self.active_limit = "NONE"  # LOWER, MIDDLE, NONE
         self.proprio = 0.0
         self.inclination = 0.0

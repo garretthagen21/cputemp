@@ -20,8 +20,11 @@ LIMITSTATE_CHARACTERISTIC_UUID = "00000004-710e-4a5b-8d75-3e5b444bc3cf"
 DESCRIPTOR_UUID="2901"
 
 
-def write_inc_callback(value):
-    print("Write value callback: "+value)
+def write_inc_callback_1(value):
+    print("Write value callback 1: "+value)
+def write_inc_callback_2(value):
+    print("Write value callback 2: "+value)
+
 
 def read_prop_callback():
     return 2.5
@@ -49,7 +52,7 @@ class InclincationCharacteristic(Characteristic):
         Characteristic.__init__(
             self, service=service, uuid=INC_CHARACTERISTIC_UUID, flags=["notify", "read","write"],
             description="Inclination Angle Characteristic", notify_timeout=Characteristic.DEFAULT_NOTIFY_TIMEOUT,
-            on_write_callbacks=[lambda value: write_inc_callback(value)])
+            on_write_callbacks=[lambda value: write_inc_callback_1(value),lambda value: write_inc_callback_2(value)])
 
         self.add_descriptor(Descriptor(characteristic=self, uuid=DESCRIPTOR_UUID,
                                        flags=["read"], description="Inclination Angle"))
@@ -62,7 +65,7 @@ class ProprioCharacteristic(Characteristic):
         Characteristic.__init__(
             self, service=service, uuid=PROPRIO_CHARACTERISTIC_UUID, flags=["notify", "read"],
             description="Proprio Angle Characteristic", notify_timeout=Characteristic.DEFAULT_NOTIFY_TIMEOUT,
-            on_write_callbacks=[lambda value: write_inc_callback(value)])
+            on_write_callbacks=[lambda value: write_inc_callback_1(value)])
 
         self.add_descriptor(Descriptor(characteristic=self, uuid=DESCRIPTOR_UUID,
                                        flags=["read"], description="Proprio Angle"))
@@ -76,7 +79,7 @@ class LimitStateCharacteristic(Characteristic):
         Characteristic.__init__(
             self, service=service, uuid=LIMITSTATE_CHARACTERISTIC_UUID, flags=["notify", "read"],
             description="Limit State Characteristic", notify_timeout=Characteristic.DEFAULT_NOTIFY_TIMEOUT,
-            on_write_callbacks=[lambda value: write_inc_callback(value)])
+            on_write_callbacks=[lambda value: write_inc_callback_1(value)])
 
         self.add_descriptor(Descriptor(characteristic=self, uuid=DESCRIPTOR_UUID,
                                        flags=["read"], description="Limit State"))

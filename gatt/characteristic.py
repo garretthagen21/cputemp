@@ -111,6 +111,7 @@ class Characteristic(dbus.service.Object):
     @dbus.service.method(GATT_CHRC_IFACE, in_signature='aya{sv}')
     def WriteValue(self, value, options):
         print("WriteValue() " + self.description + ": " + self.uuid)
+
         print("Value is: "+value+" and string is: "+str(value)+" str(val[0] "+str(value[0]))
 
         self.current_bytes = value_to_byte_array(str(value[0]))

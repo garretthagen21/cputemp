@@ -30,27 +30,41 @@ from gpiozero import CPUTemperature
 GATT_CHRC_IFACE = "org.bluez.GattCharacteristic1"
 NOTIFY_TIMEOUT = 5000
 
-class ThermometerAdvertisement(Advertisement):
+class G8Advertisement(Advertisement):
     def __init__(self, index):
         Advertisement.__init__(self, index, "peripheral")
-        self.add_local_name("Thermometer")
+        self.add_local_name("Gener-8")
+        self.add_manufacturer_data(0xFFFF,"Gener-8 Inc.")
         self.include_tx_power = True
-
-class ThermometerService(Service):
-    THERMOMETER_SVC_UUID = "00000001-710e-4a5b-8d75-3e5b444bc3cf"
+class InfoService(Service):
+    # Wifi Creds
+    # Version
+    # Serial Number
+    pass
+class MachineService(Service):
+    # Current State
+    #
+    pass
+class MeasurementService(Service):
+    MEASUREMENT_SVC_UUID = "00000001-710e-4a5b-8d75-3e5b444bc3cf"
 
     def __init__(self, index):
-        self.farenheit = True
+        self.active_limit = "NONE" # LOWER, MIDDLE, NONE
+        self.proprio = 0.0
+        self.inclination = 0.0
 
-        Service.__init__(self, index, self.THERMOMETER_SVC_UUID, True)
+        Service.__init__(self, index, self.MEASUREMENT_SVC_UUID, True)
         self.add_characteristic(TempCharacteristic(self))
         self.add_characteristic(UnitCharacteristic(self))
 
-    def is_farenheit(self):
-        return self.farenheit
-
-    def set_farenheit(self, farenheit):
-        self.farenheit = farenheit
+    def is_in_motion(self):
+        return self.state != "IDLE" and self.state != "CALIBRATION"
+    def set_proprio(self,proprio):
+        self.proprio = proprio
+    def set_inclination(self,inclination):
+        self.inclination = inclination
+    def set_state(self,state):
+        self.state = state
 
 class TempCharacteristic(Characteristic):
     TEMP_CHARACTERISTIC_UUID = "00000002-710e-4a5b-8d75-3e5b444bc3cf"

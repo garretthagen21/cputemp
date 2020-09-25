@@ -32,20 +32,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import dbus
 
-from advertisement import Advertisement
-from service import Application
-from attributes.measurement import MeasurementService
+from gatt import Advertisement
+from gatt import Application
+from ble_profile.measurement import MeasurementService
 
-GATT_CHRC_IFACE = "org.bluez.GattCharacteristic1"
 
 
 class G8Advertisement(Advertisement):
     def __init__(self, index=0):
         Advertisement.__init__(self, index, "peripheral")
         self.add_local_name("Gener-8")
-        #self.add_manufacturer_data(0xFFFF,0x47656e65722d3820496e632e0d0a)
+        self.add_manufacturer_data(0xFFFF,"Gener-8 Inc.")
         self.include_tx_power = True
 
 

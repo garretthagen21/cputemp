@@ -19,15 +19,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import dbus
-try:
-  from gi.repository import GObject
-except ImportError:
-    import gobject as GObject
 
-BLUEZ_SERVICE_NAME = "org.bluez"
-LE_ADVERTISING_MANAGER_IFACE = "org.bluez.LEAdvertisingManager1"
-DBUS_OM_IFACE = "org.freedesktop.DBus.ObjectManager"
+from gatt.common import *
+from advertisement import BLUEZ_SERVICE_NAME, LE_ADVERTISING_MANAGER_IFACE
+from service import DBUS_OM_IFACE
+
 
 class BleTools(object):
     @classmethod

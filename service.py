@@ -36,7 +36,7 @@ DBUS_PROP_IFACE = "org.freedesktop.DBus.Properties"
 GATT_SERVICE_IFACE = "org.bluez.GattService1"
 GATT_CHRC_IFACE = "org.bluez.GattCharacteristic1"
 GATT_DESC_IFACE = "org.bluez.GattDescriptor1"
-DEFAULT_NOTIFY_TIMEOUT = 5000
+DEFAULT_NOTIFY_TIMEOUT = 10
 
 
 class InvalidArgsException(dbus.exceptions.DBusException):

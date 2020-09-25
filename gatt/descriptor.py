@@ -11,6 +11,9 @@
 
 from gatt.common import *
 
+GATT_DESC_IFACE = "org.bluez.GattDescriptor1"
+
+
 class Descriptor(dbus.service.Object):
     def __init__(self, characteristic, uuid, flags, description="Unnamed Descriptor"):
         index = characteristic.get_next_index()

@@ -114,11 +114,7 @@ class Characteristic(dbus.service.Object):
 
         value_str = ''.join([chr(byte) for byte in value])
 
-
-        # Set our current value
         self.current_bytes = value_to_byte_array(value_str)
-
-        print("str(value) = "+str(value)+" --- value_str = "+value_str)
 
         # Update observers
         for write_callback in self.on_write_callbacks:

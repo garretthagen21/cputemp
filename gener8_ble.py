@@ -42,7 +42,7 @@ GATT_CHRC_IFACE = "org.bluez.GattCharacteristic1"
 
 
 class G8Advertisement(Advertisement):
-    def __init__(self, index):
+    def __init__(self, index=0):
         Advertisement.__init__(self, index, "peripheral")
         self.add_local_name("Gener-8")
         #self.add_manufacturer_data(0xFFFF,0x47656e65722d3820496e632e0d0a)

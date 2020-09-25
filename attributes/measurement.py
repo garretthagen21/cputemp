@@ -41,6 +41,7 @@ class MeasurementService(Service):
         self.inclination_characteristic.add_descriptor(
             Descriptor(self.inclination_characteristic, INC_DESCRIPTOR_UUID, "Inclination Angle",
                        ["read"]))
+        self.add_characteristic(self.inclination_characteristic)
 
 
     def is_in_motion(self):

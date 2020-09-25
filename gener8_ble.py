@@ -46,7 +46,7 @@ class G8Advertisement(Advertisement):
         self.include_tx_power = True
         self.add_service_uuid('180D')
         self.add_service_uuid('180F')
-        self.add_manufacturer_data(0xFFFF, array('B',"Gener-8 Inc."))
+        self.add_manufacturer_data(0xFFFF, array.array('B',"Gener-8 Inc."))
         self.add_service_data('9999', [0x00, 0x01, 0x02, 0x03, 0x04])
 
 

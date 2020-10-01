@@ -30,7 +30,6 @@ class G8MeasurementService(Service):
 
         self.add_characteristic(self.inclination_characteristic)
         self.add_characteristic(self.proprio_characteristic)
-        self.add_characteristic(G8LimitStateCharacteristic(self))
 
 
 class G8InclincationCharacteristic(Characteristic):
@@ -55,14 +54,3 @@ class G8ProprioCharacteristic(Characteristic):
 
         self.set_value(0, False)
 
-
-class G8LimitStateCharacteristic(Characteristic):
-    def __init__(self, service):
-        Characteristic.__init__(
-            self, service=service, uuid=LIMITSTATE_CHARACTERISTIC_UUID.full_string(), flags=["notify", "read"],
-            description="Limit State Characteristic")
-
-        self.add_descriptor(Descriptor(characteristic=self, uuid=DESCRIPTOR_UUID.shortened_string(),
-                                       flags=["read"], description="Limit State"))
-
-        self.set_value("NONE", False)

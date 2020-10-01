@@ -10,11 +10,13 @@
 #
 
 from peripheral import *
+import threading
+
 
 ble_app = G8BLEApplication(register=False)
 ble_adv = G8Advertisement(register=False)
 
-
+DO_CONTINUE = True
 
 def initialize(start_run=True):
     ble_app.register()
@@ -60,7 +62,7 @@ def simulate():
     update_num = 0
 
     while DO_CONTINUE:
-        time.sleep(5.0)
+        time.sleep(1.0)
         print("Simulated Update Round: " + str(update_num))
         update_num += 1
         #update_machine_state(random.choice(machine_states))
@@ -70,16 +72,17 @@ def simulate():
         update_proprio_angle(random.randint(0, 100))
 
 
-DO_CONTINUE = True
-import threading
+
 
 
 try:
-    initialize()
+    initialize(False)
 
-    # Create a Thread with a function without any argumen
+    # Create a Thread with a function without any argument
     sim_thread = threading.Thread(target=simulate())
     sim_thread.start()
+
+    run()
 
 except KeyboardInterrupt:
     global DO_CONTINUE

@@ -45,7 +45,7 @@ class G8Advertisement(Advertisement):
 
 class G8BLEApplication(Application):
     def __init__(self, register=True):
-        Application.__init__()
+        Application.__init__(self)
 
         # Add our services
         self.add_service(G8MeasurementService())

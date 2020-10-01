@@ -17,7 +17,7 @@ from ble_profile.identifiers import *
 
 class G8MachineService(Service):
 
-    def __init__(self, index=1):
+    def __init__(self, index=0):
         Service.__init__(self, index=index, uuid=MACHINE_SVC_UUID.full_string(), primary=True)
 
         # Add characteristics

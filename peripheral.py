@@ -25,7 +25,7 @@ class G8Advertisement(Advertisement):
 
         # Configure advertising data
         self.add_local_name(LOCAL_NAME)
-        self.add_manufacturer_data(0xFFFF, MANUFACTUER_DATA)
+        #self.add_manufacturer_data(0xFFFF, MANUFACTUER_DATA)
         self.include_tx_power = True
 
         # Advertise our available services
@@ -44,9 +44,9 @@ class G8BLEApplication(Application):
         Application.__init__(self)
 
         # Add our services
-        self.measurement_service = G8MeasurementService()
+        self.measurement_service = G8MeasurementService(0)
         # self.information_service = G8InformationService()
-        self.machine_service = G8MachineService()
+        self.machine_service = G8MachineService(1)
         # self.calibration_service = G8CalibrationService()
 
         # self.add_service(self.information_service)

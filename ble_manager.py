@@ -18,6 +18,16 @@ ble_adv = G8Advertisement(register=False)
 
 DO_CONTINUE = True
 
+def _run():
+    ble_app.run()
+
+def _stop():
+    ble_app.quit()
+
+
+run_thread = threading.Thread(target=_run())
+stop_thread = threading.Thread(target=_stop())
+
 def initialize(start_run=True):
     ble_app.register()
     ble_adv.register()
@@ -25,13 +35,12 @@ def initialize(start_run=True):
     if start_run:
         run()
 
-
 def run():
-    ble_app.run()
+    run_thread.start()
 
 
 def stop():
-    ble_app.quit()
+    stop_thread.start()
 
 
 def update_proprio_angle(angle):
@@ -39,7 +48,7 @@ def update_proprio_angle(angle):
 
 
 def update_inclination_angle(angle):
-    ble_app.measurement_service.proprio_characteristic.set_value(angle)
+    ble_app.measurement_service.inclination_characteristic.set_value(angle)
 
 
 def update_limit_state(state):
@@ -62,7 +71,7 @@ def simulate():
     update_num = 0
 
     while DO_CONTINUE:
-        time.sleep(1.0)
+        time.sleep(5.0)
         print("Simulated Update Round: " + str(update_num))
         update_num += 1
         #update_machine_state(random.choice(machine_states))
@@ -76,13 +85,12 @@ def simulate():
 
 
 try:
-    initialize(False)
+    initialize(True)
 
     # Create a Thread with a function without any argument
     sim_thread = threading.Thread(target=simulate())
     sim_thread.start()
 
-    run()
 
 except KeyboardInterrupt:
     global DO_CONTINUE

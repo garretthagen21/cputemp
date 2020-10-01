@@ -33,18 +33,18 @@ def read_limit_callback():
     return "NONE"
 
 
-class MeasurementService(Service):
+class G8MeasurementService(Service):
 
     def __init__(self, index=0):
         Service.__init__(self, index=index, uuid=MEASUREMENT_SVC_UUID.full_string(), primary=True)
 
         # Add characteristics
-        self.add_characteristic(InclincationCharacteristic(self))
-        self.add_characteristic(ProprioCharacteristic(self))
-        self.add_characteristic(LimitStateCharacteristic(self))
+        self.add_characteristic(G8InclincationCharacteristic(self))
+        self.add_characteristic(G8ProprioCharacteristic(self))
+        self.add_characteristic(G8LimitStateCharacteristic(self))
 
 
-class InclincationCharacteristic(Characteristic):
+class G8InclincationCharacteristic(Characteristic):
     def __init__(self, service):
         Characteristic.__init__(
             self, service=service, uuid=INC_CHARACTERISTIC_UUID.full_string(), flags=["notify", "read", "write"],
@@ -56,7 +56,7 @@ class InclincationCharacteristic(Characteristic):
         self.set_value(0, False)
 
 
-class ProprioCharacteristic(Characteristic):
+class G8ProprioCharacteristic(Characteristic):
     def __init__(self, service):
         Characteristic.__init__(
             self, service=service, uuid=PROPRIO_CHARACTERISTIC_UUID.full_string(), flags=["notify", "read"],
@@ -69,7 +69,7 @@ class ProprioCharacteristic(Characteristic):
         self.set_value(0, False)
 
 
-class LimitStateCharacteristic(Characteristic):
+class G8LimitStateCharacteristic(Characteristic):
     def __init__(self, service):
         Characteristic.__init__(
             self, service=service, uuid=LIMITSTATE_CHARACTERISTIC_UUID.full_string(), flags=["notify", "read"],

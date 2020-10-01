@@ -9,47 +9,55 @@
 # @date    2020-09-24 
 #
 
-# !/usr/bin/python3
 
-"""Copyright (c) 2019, Douglas Otwell
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-"""
-
-from gatt.advertisement import Advertisement
 from gatt.application import Application
-from gatt.uuid import UUID
-from ble_profile.measurement import MeasurementService
+from gatt.advertisement import Advertisement
+
+from ble_profile.measurement import G8MeasurementService
+
+from ble_profile.identifiers import *
 
 
+class G8Advertisement(Advertisement):
+
+    def __init__(self, index=0, register=True):
+        Advertisement.__init__(self, index, "peripheral")
+
+        # Configure advertising data
+        self.add_local_name(LOCAL_NAME)
+        self.include_tx_power = True
+        # self.add_manufacturer_data(0xFFFF, "Gener-8 Inc.")
+        print("Manufacturer Data")
+        print(MANUFACTUER_DATA)
+        # print(UUID('1234').full_string())
+
+        # Advertise our available services
+        self.add_service_uuid(INFORMATION_SVC_UUID.shortened_string())
+        self.add_service_uuid(MEASUREMENT_SVC_UUID.shortened_string())
+        self.add_service_uuid(MACHINE_SVC_UUID.shortened_string())
+        self.add_service_uuid(CALIBRATION_SVC_UUID.shortened_string())
+
+        # self.add_manufacturer_data(0xFFFF, self.MANUFACTURER_NAME.encode('utf-8'))
+        # self.add_service_data('9999', [0x00, 0x01, 0x02, 0x03, 0x04])
+        if register:
+            self.register()
 
 
+class G8BLEApplication(Application):
+    def __init__(self, register=True):
+        Application.__init__()
 
-app = Application()
-app.add_service(MeasurementService())
-app.register()
+        # Add our services
+        self.add_service(G8MeasurementService())
 
-adv = G8Advertisement()
-adv.register()
+        if register:
+            self.register()
+
+
+g8_app = G8BLEApplication()
+g8_adv = G8Advertisement()
 
 try:
-    app.run()
-
+    g8_app.run()
 except KeyboardInterrupt:
-    app.quit()
+    g8_app.quit()

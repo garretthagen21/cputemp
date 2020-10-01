@@ -63,7 +63,7 @@ class G8ProprioCharacteristic(Characteristic):
             description="Proprio Angle Characteristic", notify_timeout=Characteristic.DEFAULT_NOTIFY_TIMEOUT,
             on_write_callbacks=[lambda value: write_inc_callback_1(value)])
 
-        self.add_descriptor(Descriptor(characteristic=self, uuid=DESCRIPTOR_UUID,
+        self.add_descriptor(Descriptor(characteristic=self, uuid=DESCRIPTOR_UUID.shortened_string(),
                                        flags=["read"], description="Proprio Angle"))
 
         self.set_value(0, False)

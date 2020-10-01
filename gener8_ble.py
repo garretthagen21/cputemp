@@ -33,10 +33,10 @@ class G8Advertisement(Advertisement):
         # print(UUID('1234').full_string())
 
         # Advertise our available services
-        #self.add_service_uuid(INFORMATION_SVC_UUID.shortened_string())
-        #self.add_service_uuid(MEASUREMENT_SVC_UUID.shortened_string())
-        #self.add_service_uuid(MACHINE_SVC_UUID.shortened_string())
-        #self.add_service_uuid(CALIBRATION_SVC_UUID.shortened_string())
+        self.add_service_uuid(INFORMATION_SVC_UUID.shortened_string())
+        self.add_service_uuid(MEASUREMENT_SVC_UUID.shortened_string())
+        self.add_service_uuid(MACHINE_SVC_UUID.shortened_string())
+        self.add_service_uuid(CALIBRATION_SVC_UUID.shortened_string())
 
         # self.add_manufacturer_data(0xFFFF, self.MANUFACTURER_NAME.encode('utf-8'))
         # self.add_service_data('9999', [0x00, 0x01, 0x02, 0x03, 0x04])

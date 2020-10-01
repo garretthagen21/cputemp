@@ -78,8 +78,8 @@ try:
     initialize()
 
     # Create a Thread with a function without any argumen
-    # sim_thread = threading.Thread(target=simulate())
-    # sim_thread.start()
+    sim_thread = threading.Thread(target=simulate())
+    sim_thread.start()
 
 except KeyboardInterrupt:
     global DO_CONTINUE

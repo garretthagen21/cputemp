@@ -27,3 +27,7 @@ class UUID(object):
 
     def full_string(self):
         return self.device_uid + self.attribute_uid + '-' + self.EXTENDED_FILLER + "-" + self.ble_sig_uid + self.company_uid
+
+    def shortened_string(self):
+        return self.attribute_uid
+

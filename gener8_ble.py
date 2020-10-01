@@ -39,25 +39,6 @@ from ble_profile.measurement import MeasurementService
 
 
 
-class G8Advertisement(Advertisement):
-    MANUFACTURER_NAME = "Gener-8 Inc."
-
-    def __init__(self, index=0):
-        Advertisement.__init__(self, index, "peripheral")
-        self.add_local_name("Gener-8")
-        self.include_tx_power = True
-
-        #print("Manufacturer Name: "+self.MANUFACTURER_NAME+" as bytes: ")
-        #print(self.MANUFACTURER_NAME.encode('utf-8'))
-        #print(UUID('1234').full_string())
-
-        # self.add_manufacturer_data(0xFFFF, "Gener-8 Inc.")
-        # self.add_service_uuid(MEASUREMENT_SVC_UUID)
-
-        #self.add_service_uuid('180D')
-        #self.add_service_uuid('180F')
-        #self.add_manufacturer_data(0xFFFF, self.MANUFACTURER_NAME.encode('utf-8'))
-        #self.add_service_data('9999', [0x00, 0x01, 0x02, 0x03, 0x04])
 
 
 app = Application()

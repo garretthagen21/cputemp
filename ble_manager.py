@@ -63,25 +63,26 @@ def simulate():
         time.sleep(5.0)
         print("Simulated Update Round: " + str(update_num))
         update_num += 1
-        update_machine_state(random.choice(machine_states))
-        update_limit_state(random.choice(limit_states))
-        update_hardstop_state(random.choice(limit_states))
+        #update_machine_state(random.choice(machine_states))
+        #update_limit_state(random.choice(limit_states))
+        #update_hardstop_state(random.choice(limit_states))
         update_inclination_angle(random.randint(0, 100))
         update_proprio_angle(random.randint(0, 100))
 
 
 DO_CONTINUE = True
-
 import threading
-sim_thread = threading.Thread(target=simulate())
+
 
 try:
     initialize()
 
     # Create a Thread with a function without any argumen
-    #sim_thread.start()
+    # sim_thread = threading.Thread(target=simulate())
+    # sim_thread.start()
 
 except KeyboardInterrupt:
+    global DO_CONTINUE
     DO_CONTINUE = False
     #sim_thread.join()
     stop()

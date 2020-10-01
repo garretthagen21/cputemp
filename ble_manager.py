@@ -58,16 +58,18 @@ def simulate():
     limit_states = ["LOWER", "UPPER", "NONE"]
     update_num = 0
     while True:
-        print("Simulated Update Round: "+str(update_num))
-        update_num+=1
+        print("Simulated Update Round: " + str(update_num))
+        update_num += 1
         update_machine_state(random.choice(machine_states))
         update_limit_state(random.choice(limit_states))
         update_hardstop_state(random.choice(limit_states))
-        update_inclination_angle(random.randint)
-        update_proprio_angle(random.randint)
+        update_inclination_angle(random.randint(0, 100))
+        update_proprio_angle(random.randint(0, 100))
         time.sleep(0.5)
 
+
 import threading
+
 sim_thread = threading.Thread(target=simulate())
 
 try:

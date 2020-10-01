@@ -94,7 +94,7 @@ class Characteristic(dbus.service.Object):
             self.update()
 
     def get_value(self):
-        return str(self.current_bytes)
+        return ''.join([chr(byte) for byte in self.current_bytes])
 
     def update(self):
         self.PropertiesChanged(GATT_CHRC_IFACE, {"Value": self.current_bytes}, [])

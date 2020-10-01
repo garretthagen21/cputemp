@@ -16,4 +16,4 @@ from gatt.characteristic import Characteristic
 from gatt.service import Service
 from gatt.descriptor import Descriptor
 
-__all__ = ["advertisement", "application", "service","characteristic","descriptor"]
+__all__ = ["advertisement", "application", "service","characteristic","descriptor","uuid"]

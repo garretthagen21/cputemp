@@ -12,7 +12,7 @@ from gatt.uuid import UUID
 
 # Advertisement data
 LOCAL_NAME = "Gener-8"
-MANUFACTUER_DATA = "FYI".encode('utf-8')#[0x46,0x59,0x49]
+MANUFACTUER_DATA = "FYI".encode('utf-8') #[0x46,0x59,0x49]
 
 # Universal descriptor UUID
 DESCRIPTOR_UUID = UUID("2901")

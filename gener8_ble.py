@@ -25,7 +25,7 @@ class G8Advertisement(Advertisement):
         # Configure advertising data
         self.add_local_name(LOCAL_NAME)
         self.include_tx_power = True
-        #self.add_manufacturer_data(0xffff, [0x47, 0x65, 0x6e, 0x65])
+        self.add_manufacturer_data(0xFFFF, MANUFACTUER_DATA)
 
         # Advertise our available services
         self.add_service_uuid(INFORMATION_SVC_UUID.shortened_string())

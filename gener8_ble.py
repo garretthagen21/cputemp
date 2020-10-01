@@ -26,11 +26,7 @@ class G8Advertisement(Advertisement):
         # Configure advertising data
         self.add_local_name(LOCAL_NAME)
         self.include_tx_power = True
-        # self.add_manufacturer_data(0xFFFF, "Gener-8 Inc.")
-        print("Manufacturer Data")
-        for item in MANUFACTUER_DATA:
-            print(item)
-        # print(UUID('1234').full_string())
+        self.add_manufacturer_data(0xFFFF, MANUFACTUER_DATA)
 
         # Advertise our available services
         self.add_service_uuid(INFORMATION_SVC_UUID.shortened_string())
@@ -38,8 +34,7 @@ class G8Advertisement(Advertisement):
         self.add_service_uuid(MACHINE_SVC_UUID.shortened_string())
         self.add_service_uuid(CALIBRATION_SVC_UUID.shortened_string())
 
-        # self.add_manufacturer_data(0xFFFF, self.MANUFACTURER_NAME.encode('utf-8'))
-        # self.add_service_data('9999', [0x00, 0x01, 0x02, 0x03, 0x04])
+        # Register if specified
         if register:
             self.register()
 

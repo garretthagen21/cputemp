@@ -84,10 +84,11 @@ class Characteristic(dbus.service.Object):
         return self.descriptors
 
     def set_value(self, new_val, update=True):
+        new_val = str(new_val)
         old_val = self.get_value()
         self.current_bytes = value_to_byte_array(new_val)
 
-        print("set_value() for "+self.description+" Old: "+old_val+" New: "+new_val)
+        print("set_value() for "+self.description+" Old: "+str(old_val)+" New: "+str(new_val))
         # Update if the value has changed
         if update and new_val != old_val:
             self.update()

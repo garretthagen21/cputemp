@@ -92,7 +92,6 @@ class Advertisement(dbus.service.Object):
     def GetAll(self, interface):
         if interface != LE_ADVERTISEMENT_IFACE:
             raise InvalidArgsException()
-        print(self.get_properties()[LE_ADVERTISEMENT_IFACE])
         return self.get_properties()[LE_ADVERTISEMENT_IFACE]
 
     @dbus.service.method(LE_ADVERTISEMENT_IFACE,

@@ -67,10 +67,16 @@ def simulate():
         update_proprio_angle(random.randint)
         time.sleep(0.5)
 
+import threading
+sim_thread = threading.Thread(target=simulate())
 
 try:
     initialize()
-    simulate()
+
+    # Create a Thread with a function without any argumen
+    sim_thread.start()
+
 except KeyboardInterrupt:
+    sim_thread.join()
     stop()
     exit(0)

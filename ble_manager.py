@@ -13,7 +13,8 @@ from peripheral import *
 
 ble_app = G8BLEApplication(register=False)
 ble_adv = G8Advertisement(register=False)
-do_continue = True
+DO_CONTINUE = True
+
 
 def initialize(start_run=True):
     ble_app.register()
@@ -57,7 +58,9 @@ def simulate():
     machine_states = ["AUTORUN", "IDLE", "MOVING", "CALIBRATING"]
     limit_states = ["LOWER", "UPPER", "NONE"]
     update_num = 0
-    while do_continue:
+    
+    while DO_CONTINUE:
+        time.sleep(1.0)
         print("Simulated Update Round: " + str(update_num))
         update_num += 1
         update_machine_state(random.choice(machine_states))
@@ -65,10 +68,11 @@ def simulate():
         update_hardstop_state(random.choice(limit_states))
         update_inclination_angle(random.randint(0, 100))
         update_proprio_angle(random.randint(0, 100))
-        time.sleep(0.5)
+
 
 
 import threading
+
 sim_thread = threading.Thread(target=simulate())
 
 try:
@@ -78,8 +82,8 @@ try:
     sim_thread.start()
 
 except KeyboardInterrupt:
+    global DO_CONTINUE
+    DO_CONTINUE = False
     sim_thread.join()
-    global do_continue
-    do_continue = False
     stop()
     exit(0)

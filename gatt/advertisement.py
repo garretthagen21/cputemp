@@ -72,9 +72,6 @@ class Advertisement(dbus.service.Object):
         self.solicit_uuids.append(uuid)
 
     def add_manufacturer_data(self, manuf_code, data):
-        if not isinstance(data,list):
-            data = value_to_byte_array(data)
-
         if not self.manufacturer_data:
             self.manufacturer_data = dbus.Dictionary({}, signature="qv")
         self.manufacturer_data[manuf_code] = dbus.Array(data, signature="y")

@@ -53,10 +53,10 @@ class G8Advertisement(Advertisement):
         # self.add_manufacturer_data(0xFFFF, "Gener-8 Inc.")
         # self.add_service_uuid(MEASUREMENT_SVC_UUID)
         self.include_tx_power = True
-        self.add_service_uuid('180D')
-        self.add_service_uuid('180F')
+        #self.add_service_uuid('180D')
+        #self.add_service_uuid('180F')
         #self.add_manufacturer_data(0xFFFF, self.MANUFACTURER_NAME.encode('utf-8'))
-        self.add_service_data('9999', [0x00, 0x01, 0x02, 0x03, 0x04])
+        #self.add_service_data('9999', [0x00, 0x01, 0x02, 0x03, 0x04])
 
 
 app = Application()

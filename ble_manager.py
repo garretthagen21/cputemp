@@ -56,7 +56,10 @@ def simulate():
     import time
     machine_states = ["AUTORUN", "IDLE", "MOVING", "CALIBRATING"]
     limit_states = ["LOWER", "UPPER", "NONE"]
+    update_num = 0
     while True:
+        print("Simulated Update Round: "+str(update_num))
+        update_num+=1
         update_machine_state(random.choice(machine_states))
         update_limit_state(random.choice(limit_states))
         update_hardstop_state(random.choice(limit_states))

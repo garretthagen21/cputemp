@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 #
-# @file    gener8_ble.py
+# @file    peripheral.py
 # 
 # @brief       
 #
@@ -14,7 +14,8 @@ from gatt.application import Application
 from gatt.advertisement import Advertisement
 from ble_profile.identifiers import *
 from ble_profile.measurement import G8MeasurementService
-
+# from ble_profile.information import G8InformationService
+from ble_profile.machine import G8MachineService
 
 
 class G8Advertisement(Advertisement):
@@ -24,8 +25,8 @@ class G8Advertisement(Advertisement):
 
         # Configure advertising data
         self.add_local_name(LOCAL_NAME)
-        self.include_tx_power = True
         self.add_manufacturer_data(0xFFFF, MANUFACTUER_DATA)
+        self.include_tx_power = True
 
         # Advertise our available services
         self.add_service_uuid(INFORMATION_SVC_UUID.shortened_string())
@@ -43,16 +44,23 @@ class G8BLEApplication(Application):
         Application.__init__(self)
 
         # Add our services
-        self.add_service(G8MeasurementService())
+        self.measurement_service = G8MeasurementService()
+        # self.information_service = G8InformationService()
+        self.machine_service = G8MachineService()
+        # self.calibration_service = G8CalibrationService()
+
+        # self.add_service(self.information_service)
+        self.add_service(self.measurement_service)
+        self.add_service(self.machine_service)
+        # self.add_service(self.calibration_service)
 
         if register:
             self.register()
 
+# g8_app = G8BLEApplication()
+# g8_adv = G8Advertisement()
 
-g8_app = G8BLEApplication()
-g8_adv = G8Advertisement()
-
-try:
-    g8_app.run()
-except KeyboardInterrupt:
-    g8_app.quit()
+# try:
+#    g8_app.run()
+# except KeyboardInterrupt:
+#    g8_app.quit()

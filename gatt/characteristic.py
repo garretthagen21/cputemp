@@ -14,17 +14,13 @@ from gatt.common import *
 GATT_CHRC_IFACE = "org.bluez.GattCharacteristic1"
 
 
-
-
 class Characteristic(dbus.service.Object):
     """
     org.bluez.GattCharacteristic1 interface implementation
     """
     DEFAULT_NOTIFY_TIMEOUT = 1000
 
-
     def __init__(self, service, uuid, flags, description="Unnamed Characteristic",
-                 notify_timeout=DEFAULT_NOTIFY_TIMEOUT,
                  on_write_callbacks=[]):
 
         index = service.get_next_index()
@@ -38,7 +34,6 @@ class Characteristic(dbus.service.Object):
         self.next_index = 0
         self.description = description
         self.on_write_callbacks = on_write_callbacks
-        self.notify_timeout = notify_timeout
         self.current_bytes = value_to_byte_array("")
         dbus.service.Object.__init__(self, self.bus, self.path)
 
@@ -54,7 +49,6 @@ class Characteristic(dbus.service.Object):
             }
         }
 
-
     def get_path(self):
         return dbus.ObjectPath(self.path)
 
@@ -69,6 +63,14 @@ class Characteristic(dbus.service.Object):
 
         return idx
 
+    def add_write_callback(self, callback):
+        if callback not in self.on_write_callbacks:
+            self.on_write_callbacks.append(callback)
+
+    def remove_write_callback(self, callback):
+        if callback in self.on_write_callbacks:
+            self.on_write_callbacks.remove(callback)
+
     def add_descriptor(self, descriptor):
         self.descriptors.append(descriptor)
 
@@ -82,8 +84,10 @@ class Characteristic(dbus.service.Object):
         return self.descriptors
 
     def set_value(self, new_val, update=True):
+        old_val = self.get_value()
         self.current_bytes = value_to_byte_array(new_val)
-        if update:
+        # Update if the value has changed
+        if update and new_val != old_val:
             self.update()
 
     def get_value(self):
@@ -91,7 +95,6 @@ class Characteristic(dbus.service.Object):
 
     def update(self):
         self.PropertiesChanged(GATT_CHRC_IFACE, {"Value": self.current_bytes}, [])
-
 
     def _on_notification_timer_trigger(self):
 
@@ -131,7 +134,6 @@ class Characteristic(dbus.service.Object):
         print("StartNotify() for Characteristic " + self.uuid)
         self.notifying = True
         self.update()
-
 
     @dbus.service.method(GATT_CHRC_IFACE)
     def StopNotify(self):

@@ -54,6 +54,7 @@ class Characteristic(dbus.service.Object):
             }
         }
 
+
     def get_path(self):
         return dbus.ObjectPath(self.path)
 

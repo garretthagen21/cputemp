@@ -76,11 +76,11 @@ def simulate():
 
 
 try:
-    initialize(False)
-
     # Create a Thread with a function without any argument
     sim_thread = threading.Thread(target=simulate())
     sim_thread.start()
+
+    initialize(True)
 
     run()
 

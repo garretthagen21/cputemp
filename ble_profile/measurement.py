@@ -15,10 +15,6 @@ from gatt.descriptor import Descriptor
 from ble_profile.identifiers import *
 
 
-
-
-
-
 class G8MeasurementService(Service):
 
     def __init__(self, index=0):
@@ -53,4 +49,3 @@ class G8ProprioCharacteristic(Characteristic):
                                        flags=["read"], description="Proprio Angle"))
 
         self.set_value(0, False)
-

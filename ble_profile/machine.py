@@ -24,10 +24,12 @@ class G8MachineService(Service):
         self.machine_state_characteristic = G8MachineStateCharacteristic(self)
         self.limit_state_characteristic = G8LimitStateCharacteristic(self)
         self.hardstop_state_characteristic = G8HardStopStateCharacteristic(self)
+        self.motorspeed_characteristic = G8MotorSpeedCharacteristic(self)
 
         self.add_characteristic(self.machine_state_characteristic)
         self.add_characteristic(self.limit_state_characteristic)
         self.add_characteristic(self.hardstop_state_characteristic)
+        self.add_characteristic(self.motorspeed_characteristic)
 
 
 class G8MachineStateCharacteristic(Characteristic):
@@ -64,3 +66,15 @@ class G8HardStopStateCharacteristic(Characteristic):
                                        flags=["read"], description="Hard Stop State"))
 
         self.set_value("NONE", False)
+
+
+class G8MotorSpeedCharacteristic(Characteristic):
+    def __init__(self, service):
+        Characteristic.__init__(
+            self, service=service, uuid=MOTORSPEED_CHARACTERISTIC_UUID.full_string(), flags=["write", "read"],
+            description="Hard Stop State Characteristic")
+
+        self.add_descriptor(Descriptor(characteristic=self, uuid=DESCRIPTOR_UUID.shortened_string(),
+                                       flags=["read", "write"], description="Carriage Motor Speed"))
+
+        self.set_value(1.0, False)
